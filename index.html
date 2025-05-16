@@ -3,36 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Guide to Updating Menu Code Blocks</title>
+    <title>Guide to Updating Menu Code Blocks (PDF Version)</title>
     <style>
+        @page {
+            size: letter;
+            margin: 1in;
+        }
+        
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
+            margin: 0;
+            padding: 0;
+            font-size: 11pt;
         }
         
         h1 {
             color: #173852;
             border-bottom: 2px solid #d4af37;
             padding-bottom: 10px;
+            font-size: 18pt;
+            margin-top: 20px;
+            page-break-after: avoid;
         }
         
         h2 {
             color: #173852;
-            margin-top: 30px;
+            margin-top: 25px;
+            font-size: 14pt;
+            page-break-after: avoid;
+        }
+        
+        h3 {
+            color: #173852;
+            font-size: 12pt;
+            margin-top: 20px;
+            page-break-after: avoid;
+        }
+        
+        p, ul, ol, table {
+            margin-bottom: 12px;
         }
         
         .code-block {
             background-color: #f5f5f5;
             border-left: 4px solid #173852;
-            padding: 15px;
-            margin: 20px 0;
-            overflow-x: auto;
+            padding: 10px;
+            margin: 15px 0;
             font-family: 'Courier New', Courier, monospace;
-            position: relative;
+            font-size: 10pt;
+            overflow-wrap: break-word;
+            white-space: pre-wrap;
         }
         
         .highlight {
@@ -40,54 +62,67 @@
             padding: 2px;
         }
         
-        .preview-section {
-            background-color: #eef5f9;
-            border: 1px solid #d1e0e0;
-            border-radius: 5px;
-            padding: 20px;
+        .example-container {
             margin: 20px 0;
+            page-break-inside: avoid;
+        }
+        
+        .example-box {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+            padding: 10px;
+        }
+        
+        .example-heading {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #173852;
+        }
+        
+        .example-code {
+            background-color: #f8f8f8;
+            padding: 8px;
+            margin-bottom: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 9pt;
+            border: 1px solid #eee;
+        }
+        
+        .example-preview {
+            padding: 8px;
+            border: 1px solid #ddd;
+            background-color: #fff;
         }
         
         .tip-box {
             background-color: #e8f4fd;
             border-left: 4px solid #0099cc;
-            padding: 15px;
-            margin: 20px 0;
+            padding: 12px;
+            margin: 15px 0;
+            page-break-inside: avoid;
         }
         
-        .example-box {
-            display: flex;
-            margin: 20px 0;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        
-        .before, .after {
-            flex: 1;
-            min-width: 300px;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .before {
-            background-color: #f9f9f9;
-        }
-        
-        .after {
-            background-color: #f0f7ff;
+        .color-sample {
+            display: inline-block;
+            width: 15px;
+            height: 15px;
+            margin-right: 5px;
+            vertical-align: middle;
+            border: 1px solid #ccc;
         }
         
         table {
             border-collapse: collapse;
             width: 100%;
-            margin: 20px 0;
+            margin: 15px 0;
+            page-break-inside: avoid;
         }
         
         th, td {
             border: 1px solid #ddd;
-            padding: 8px 12px;
+            padding: 6px 8px;
             text-align: left;
+            font-size: 10pt;
         }
         
         th {
@@ -99,259 +134,148 @@
             background-color: #f2f2f2;
         }
         
-        .color-sample {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            margin-right: 5px;
-            vertical-align: middle;
-            border: 1px solid #ccc;
+        img {
+            max-width: 100%;
+            height: auto;
         }
         
-        .editor-container {
-            margin: 30px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            overflow: hidden;
+        .page-break {
+            page-break-before: always;
         }
         
-        .editor-tabs {
-            display: flex;
-            background-color: #f0f0f0;
-            border-bottom: 1px solid #ccc;
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 9pt;
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
         }
         
-        .editor-tab {
-            padding: 10px 15px;
-            cursor: pointer;
-            background-color: #f0f0f0;
-            border: none;
-            border-right: 1px solid #ccc;
-        }
-        
-        .editor-tab.active {
-            background-color: #fff;
-            border-bottom: 1px solid #fff;
-            margin-bottom: -1px;
-        }
-        
-        .editor-content {
-            display: none;
-            padding: 15px;
-        }
-        
-        .editor-content.active {
-            display: block;
-        }
-        
-        .editor-input {
-            width: 100%;
-            min-height: 200px;
+        code {
             font-family: 'Courier New', Courier, monospace;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            resize: vertical;
+            background-color: #f0f0f0;
+            padding: 2px 4px;
+            font-size: 90%;
         }
         
-        .preview-button {
-            background-color: #173852;
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        
-        .preview-button:hover {
-            background-color: #0e2438;
-        }
-        
-        .preview-output {
-            margin-top: 15px;
-            border: 1px solid #ccc;
-            padding: 15px;
-            min-height: 100px;
-        }
-        
-        .copy-button {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #173852;
-            color: white;
-            border: none;
-            border-radius: 3px;
-            padding: 3px 8px;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        
-        .learn-more-button {
-            position: relative;
-            overflow: hidden;
+        .button-example {
+            display: inline-block;
             background-color: #D4AF37;
             color: #173852;
-            padding: 10px 20px;
-            display: inline-block;
+            padding: 8px 15px;
             text-transform: uppercase;
-            font-size: 14px;
+            font-size: 10pt;
             font-weight: bold;
             border-radius: 4px;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            margin: 5px 0;
         }
         
-        .learn-more-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(23, 56, 82, 0.2);
-        }
-
-        /* Top navigation */
-        .nav-container {
-            position: sticky;
-            top: 0;
-            background-color: #fff;
-            padding: 10px 0;
-            border-bottom: 1px solid #ddd;
-            z-index: 100;
-        }
-        
-        .nav-menu {
-            display: flex;
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-        
-        .nav-menu li {
-            margin-right: 15px;
-        }
-        
-        .nav-menu a {
-            color: #173852;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 3px;
-            font-weight: 500;
-        }
-        
-        .nav-menu a:hover {
-            background-color: #f0f7ff;
-        }
-        
-        /* Responsive styles */
-        @media (max-width: 768px) {
-            .example-box {
-                flex-direction: column;
-            }
-            
-            .before, .after {
-                min-width: 100%;
-            }
+        .blue-button-example {
+            display: inline-block;
+            background-color: #0099cc;
+            color: white;
+            padding: 8px 15px;
+            text-transform: uppercase;
+            font-size: 10pt;
+            font-weight: bold;
+            border-radius: 4px;
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
 
-<h1>Interactive Guide to Updating Menu Code Blocks</h1>
-
-<div class="nav-container">
-    <ul class="nav-menu">
-        <li><a href="#changing-links">Changing Links</a></li>
-        <li><a href="#changing-text">Changing Text</a></li>
-        <li><a href="#changing-colors">Changing Colors</a></li>
-        <li><a href="#changing-widths">Changing Widths</a></li>
-        <li><a href="#adding-links">Adding Links</a></li>
-        <li><a href="#interactive-editor">Interactive Editor</a></li>
-        <li><a href="#color-reference">Color Reference</a></li>
-    </ul>
-</div>
+<h1>Guide to Updating Menu Code Blocks</h1>
 
 <div class="tip-box">
-    <strong>How to use this guide:</strong> This interactive page shows you how to make common changes to the menu code blocks. Each section includes examples, before and after comparisons, and instructions. Scroll down to find the specific change you want to make.
+    <strong>How to use this guide:</strong> This document shows you how to make common changes to the menu code blocks. Each section includes examples, visual comparisons, and step-by-step instructions.
 </div>
 
-<h2 id="changing-links">1. Changing Menu Links</h2>
+<h2>1. Changing Menu Links</h2>
 
 <p>To update where a link goes, find the <code>href</code> attribute and change the URL inside the quotes.</p>
 
 <div class="code-block">
-    &lt;a <span class="highlight">href="/change-this-part"</span> style="color: white; text-decoration: none;"&gt;Link Text&lt;/a&gt;
-    <button class="copy-button" onclick="copyToClipboard(this)">Copy</button>
+&lt;a <span class="highlight">href="/change-this-part"</span> style="color: white; text-decoration: none;"&gt;Link Text&lt;/a&gt;
 </div>
 
-<div class="example-box">
-    <div class="before">
-        <h4>Before:</h4>
-        <pre>&lt;a href="/election-security" style="color: white;"&gt;Election Security&lt;/a&gt;</pre>
-        <div class="preview-section">
-            <a href="/election-security" style="color: #173852;">Election Security</a>
+<div class="example-container">
+    <div class="example-box">
+        <div class="example-heading">Before:</div>
+        <div class="example-code">&lt;a href="/election-security" style="color: white;"&gt;Election Security&lt;/a&gt;</div>
+        <div class="example-preview">
+            <p>Links to: <code>/election-security</code></p>
+            <p>Text shows: Election Security</p>
         </div>
     </div>
-    <div class="after">
-        <h4>After:</h4>
-        <pre>&lt;a href="/new-program-page" style="color: white;"&gt;Election Security&lt;/a&gt;</pre>
-        <div class="preview-section">
-            <a href="/new-program-page" style="color: #173852;">Election Security</a>
-            <p><small>The link would now go to "/new-program-page" instead</small></p>
+    
+    <div class="example-box">
+        <div class="example-heading">After:</div>
+        <div class="example-code">&lt;a href="/new-program-page" style="color: white;"&gt;Election Security&lt;/a&gt;</div>
+        <div class="example-preview">
+            <p>Links to: <code>/new-program-page</code></p>
+            <p>Text shows: Election Security</p>
         </div>
     </div>
 </div>
 
-<h2 id="changing-text">2. Changing Link and Button Text</h2>
+<div class="tip-box">
+    <strong>Important:</strong> Make sure to keep the quotes around the URL and don't add any spaces inside the quotes.
+</div>
+
+<h2>2. Changing Link and Button Text</h2>
 
 <p>To change what text appears on the link or button, edit the text between the opening <code>&lt;a&gt;</code> and closing <code>&lt;/a&gt;</code> tags.</p>
 
 <div class="code-block">
-    &lt;a href="/link-url" style="color: white; text-decoration: none;"&gt;<span class="highlight">Change This Text</span>&lt;/a&gt;
-    <button class="copy-button" onclick="copyToClipboard(this)">Copy</button>
+&lt;a href="/link-url" style="color: white; text-decoration: none;"&gt;<span class="highlight">Change This Text</span>&lt;/a&gt;
 </div>
 
-<div class="example-box">
-    <div class="before">
-        <h4>Before:</h4>
-        <pre>&lt;a href="/link" class="learn-more-button"&gt;LEARN MORE&lt;/a&gt;</pre>
-        <div class="preview-section">
-            <a href="/link" class="learn-more-button">LEARN MORE</a>
+<div class="example-container">
+    <div class="example-box">
+        <div class="example-heading">Before:</div>
+        <div class="example-code">&lt;a href="/link" class="learn-more-button"&gt;LEARN MORE&lt;/a&gt;</div>
+        <div class="example-preview">
+            <div class="button-example">LEARN MORE</div>
         </div>
     </div>
-    <div class="after">
-        <h4>After:</h4>
-        <pre>&lt;a href="/link" class="learn-more-button"&gt;ENROLL NOW&lt;/a&gt;</pre>
-        <div class="preview-section">
-            <a href="/link" class="learn-more-button" style="background-color: #D4AF37; color: #173852; padding: 10px 20px; display: inline-block; text-transform: uppercase; font-size: 14px; font-weight: bold; border-radius: 4px; text-decoration: none;">ENROLL NOW</a>
+    
+    <div class="example-box">
+        <div class="example-heading">After:</div>
+        <div class="example-code">&lt;a href="/link" class="learn-more-button"&gt;ENROLL NOW&lt;/a&gt;</div>
+        <div class="example-preview">
+            <div class="button-example">ENROLL NOW</div>
         </div>
     </div>
 </div>
 
-<h2 id="changing-colors">3. Changing Colors</h2>
+<div class="page-break"></div>
+
+<h2>3. Changing Colors</h2>
 
 <p>Colors are defined using hex codes (like #173852). You can update these to change the background color, text color, or button color.</p>
 
 <h3>Changing Background Color:</h3>
 
 <div class="code-block">
-    &lt;div class="menu-name-megamenu" style="<span class="highlight">background-color: #173852;</span> padding: 20px;"&gt;
-    <button class="copy-button" onclick="copyToClipboard(this)">Copy</button>
+&lt;div class="menu-name-megamenu" style="<span class="highlight">background-color: #173852;</span> padding: 20px;"&gt;
 </div>
 
-<div class="example-box">
-    <div class="before">
-        <h4>Before:</h4>
-        <pre>&lt;div style="background-color: #173852; padding: 10px; color: white;"&gt;Dark Blue Background&lt;/div&gt;</pre>
-        <div class="preview-section">
-            <div style="background-color: #173852; padding: 10px; color: white;">Dark Blue Background</div>
+<div class="example-container">
+    <div class="example-box">
+        <div class="example-heading">Before:</div>
+        <div class="example-code">&lt;div style="background-color: #173852; padding: 10px; color: white;"&gt;Dark Blue Background&lt;/div&gt;</div>
+        <div class="example-preview" style="background-color: #173852; color: white; padding: 8px;">
+            Dark Blue Background
         </div>
     </div>
-    <div class="after">
-        <h4>After:</h4>
-        <pre>&lt;div style="background-color: #0a2240; padding: 10px; color: white;"&gt;Darker Blue Background&lt;/div&gt;</pre>
-        <div class="preview-section">
-            <div style="background-color: #0a2240; padding: 10px; color: white;">Darker Blue Background</div>
+    
+    <div class="example-box">
+        <div class="example-heading">After:</div>
+        <div class="example-code">&lt;div style="background-color: #0a2240; padding: 10px; color: white;"&gt;Darker Blue Background&lt;/div&gt;</div>
+        <div class="example-preview" style="background-color: #0a2240; color: white; padding: 8px;">
+            Darker Blue Background
         </div>
     </div>
 </div>
@@ -359,54 +283,64 @@
 <h3>Changing Button Color:</h3>
 
 <div class="code-block">
-    &lt;a href="/link" class="learn-more-button" style="<span class="highlight">background-color: #D4AF37; color: #173852;</span> padding: 10px 20px;"&gt;
-    <button class="copy-button" onclick="copyToClipboard(this)">Copy</button>
+&lt;a href="/link" class="learn-more-button" style="<span class="highlight">background-color: #D4AF37; color: #173852;</span> padding: 10px 20px;"&gt;
 </div>
 
-<div class="example-box">
-    <div class="before">
-        <h4>Before:</h4>
-        <pre>&lt;a href="/link" style="background-color: #D4AF37; color: #173852; padding: 8px 15px; display: inline-block; border-radius: 4px; text-decoration: none; font-weight: bold;"&gt;LEARN MORE&lt;/a&gt;</pre>
-        <div class="preview-section">
-            <a href="/link" style="background-color: #D4AF37; color: #173852; padding: 8px 15px; display: inline-block; border-radius: 4px; text-decoration: none; font-weight: bold;">LEARN MORE</a>
+<div class="example-container">
+    <div class="example-box">
+        <div class="example-heading">Before:</div>
+        <div class="example-code">&lt;a href="/link" style="background-color: #D4AF37; color: #173852; padding: 8px 15px; display: inline-block; border-radius: 4px; text-decoration: none; font-weight: bold;"&gt;LEARN MORE&lt;/a&gt;</div>
+        <div class="example-preview">
+            <div class="button-example">LEARN MORE</div>
         </div>
     </div>
-    <div class="after">
-        <h4>After:</h4>
-        <pre>&lt;a href="/link" style="background-color: #0099cc; color: white; padding: 8px 15px; display: inline-block; border-radius: 4px; text-decoration: none; font-weight: bold;"&gt;LEARN MORE&lt;/a&gt;</pre>
-        <div class="preview-section">
-            <a href="/link" style="background-color: #0099cc; color: white; padding: 8px 15px; display: inline-block; border-radius: 4px; text-decoration: none; font-weight: bold;">LEARN MORE</a>
+    
+    <div class="example-box">
+        <div class="example-heading">After:</div>
+        <div class="example-code">&lt;a href="/link" style="background-color: #0099cc; color: white; padding: 8px 15px; display: inline-block; border-radius: 4px; text-decoration: none; font-weight: bold;"&gt;LEARN MORE&lt;/a&gt;</div>
+        <div class="example-preview">
+            <div class="blue-button-example">LEARN MORE</div>
         </div>
     </div>
 </div>
 
-<h2 id="changing-widths">4. Changing Menu Width</h2>
+<div class="page-break"></div>
+
+<h2>4. Changing Menu Width</h2>
 
 <p>To make the menu wider or narrower, change the width value.</p>
 
 <div class="code-block">
-    &lt;div class="megamenu-content" style="<span class="highlight">width: 300px;</span> max-width: 100%;"&gt;
-    <button class="copy-button" onclick="copyToClipboard(this)">Copy</button>
+&lt;div class="megamenu-content" style="<span class="highlight">width: 300px;</span> max-width: 100%;"&gt;
 </div>
 
-<div class="example-box">
-    <div class="before">
-        <h4>Before:</h4>
-        <pre>&lt;div style="width: 300px; background-color: #f0f0f0; padding: 10px;"&gt;This menu is 300px wide&lt;/div&gt;</pre>
-        <div class="preview-section">
-            <div style="width: 300px; background-color: #f0f0f0; padding: 10px;">This menu is 300px wide</div>
+<div class="example-container">
+    <div class="example-box">
+        <div class="example-heading">Before:</div>
+        <div class="example-code">&lt;div style="width: 300px; background-color: #f0f0f0; padding: 10px;"&gt;This menu is 300px wide&lt;/div&gt;</div>
+        <div class="example-preview">
+            <div style="width: 300px; background-color: #f0f0f0; padding: 8px; border: 1px dashed #999;">
+                This menu is 300px wide
+            </div>
         </div>
     </div>
-    <div class="after">
-        <h4>After:</h4>
-        <pre>&lt;div style="width: 400px; background-color: #f0f0f0; padding: 10px;"&gt;This menu is 400px wide&lt;/div&gt;</pre>
-        <div class="preview-section">
-            <div style="width: 400px; background-color: #f0f0f0; padding: 10px;">This menu is 400px wide</div>
+    
+    <div class="example-box">
+        <div class="example-heading">After:</div>
+        <div class="example-code">&lt;div style="width: 400px; background-color: #f0f0f0; padding: 10px;"&gt;This menu is 400px wide&lt;/div&gt;</div>
+        <div class="example-preview">
+            <div style="width: 400px; background-color: #f0f0f0; padding: 8px; border: 1px dashed #999;">
+                This menu is 400px wide
+            </div>
         </div>
     </div>
 </div>
 
-<h2 id="adding-links">5. Adding a New Link</h2>
+<div class="tip-box">
+    <strong>Note:</strong> When changing width, keep the <code>max-width: 100%;</code> part to ensure the menu still works on mobile devices.
+</div>
+
+<h2>5. Adding a New Link</h2>
 
 <p>To add a new link to the menu, copy and paste an existing list item (<code>&lt;li&gt;</code>) and change the link and text.</p>
 
@@ -416,88 +350,98 @@
         <span class="highlight">Your New Link Text</span>
     &lt;/a&gt;
 &lt;/li&gt;
-    <button class="copy-button" onclick="copyToClipboard(this)">Copy</button>
 </div>
 
-<div class="example-box">
-    <div class="before">
-        <h4>Before:</h4>
-<pre>&lt;ul style="list-style: none; padding: 0; margin: 0;"&gt;
+<div class="example-container">
+    <div class="example-box">
+        <div class="example-heading">Before:</div>
+<div class="example-code">&lt;ul style="list-style: none; padding: 0; margin: 0;"&gt;
     &lt;li&gt;&lt;a href="/link1"&gt;First Link&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a href="/link2"&gt;Second Link&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;</pre>
-        <div class="preview-section">
+&lt;/ul&gt;</div>
+        <div class="example-preview">
             <ul style="list-style: none; padding: 0; margin: 0;">
-                <li><a href="/link1" style="color: #173852;">First Link</a></li>
-                <li><a href="/link2" style="color: #173852;">Second Link</a></li>
+                <li>• First Link</li>
+                <li>• Second Link</li>
             </ul>
         </div>
     </div>
-    <div class="after">
-        <h4>After:</h4>
-<pre>&lt;ul style="list-style: none; padding: 0; margin: 0;"&gt;
+    
+    <div class="example-box">
+        <div class="example-heading">After:</div>
+<div class="example-code">&lt;ul style="list-style: none; padding: 0; margin: 0;"&gt;
     &lt;li&gt;&lt;a href="/link1"&gt;First Link&lt;/a&gt;&lt;/li&gt;
     &lt;li&gt;&lt;a href="/link2"&gt;Second Link&lt;/a&gt;&lt;/li&gt;
     <span class="highlight">&lt;li&gt;&lt;a href="/new-link"&gt;New Added Link&lt;/a&gt;&lt;/li&gt;</span>
-&lt;/ul&gt;</pre>
-        <div class="preview-section">
+&lt;/ul&gt;</div>
+        <div class="example-preview">
             <ul style="list-style: none; padding: 0; margin: 0;">
-                <li><a href="/link1" style="color: #173852;">First Link</a></li>
-                <li><a href="/link2" style="color: #173852;">Second Link</a></li>
-                <li><a href="/new-link" style="color: #173852;">New Added Link</a></li>
+                <li>• First Link</li>
+                <li>• Second Link</li>
+                <li>• New Added Link</li>
             </ul>
         </div>
     </div>
 </div>
 
-<h2 id="interactive-editor">6. Interactive Code Editor</h2>
+<div class="page-break"></div>
 
-<p>Try editing the code below to see how your changes affect the menu's appearance. Make changes in the HTML tab and click "Preview Changes" to see the result.</p>
+<h2>6. Full Menu Example with Labels</h2>
 
-<div class="editor-container">
-    <div class="editor-tabs">
-        <button class="editor-tab active" onclick="switchTab('html')">HTML</button>
-        <button class="editor-tab" onclick="switchTab('preview')">Live Preview</button>
-    </div>
-    <div class="editor-content active" id="html-content">
-        <textarea class="editor-input" id="html-editor"><!-- Sample Menu Item -->
-<div style="background-color: #173852; padding: 20px; width: 300px; box-shadow: 0 2px 5px rgba(0,0,0,0.2);">
-    <!-- Menu Header -->
-    <div style="margin-bottom: 20px;">
-        <h2 style="color: white; margin: 0; font-size: 24px; font-weight: 500;">SAMPLE MENU</h2>
-        <a href="/sample-link" style="background-color: #D4AF37; color: #173852; padding: 10px 20px; display: inline-block; margin-top: 10px; border-radius: 4px; text-decoration: none; font-weight: bold;">LEARN MORE</a>
-    </div>
+<p>Here's a complete example of a menu block with all parts labeled:</p>
+
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA0IAAAHRCA‍‍‍IAAAHzkvzJ+//Z" alt="Menu diagram showing all parts" style="max-width: 100%; height: auto; border: 1px solid #ddd; padding: 5px; background: white;">
+
+<div style="border: 1px solid #ddd; padding: 15px; margin: 15px 0; background-color: #f9f9f9;">
+    <h3 style="margin-top: 0;">Complete Menu Block Structure</h3>
     
-    <!-- Description -->
-    <div style="color: white; font-size: 13px; line-height: 1.5; margin-bottom: 15px;">
-        This is a sample description for the menu. You can edit this text to see how changes appear.
-    </div>
+<div class="code-block" style="font-size: 9pt; background-color: white;">
+&lt;!-- Menu Container --&gt;
+&lt;div class="menu-name-megamenu" style="background-color: #173852; padding: 20px; width: 100%; box-sizing: border-box; box-shadow: 0 6px 12px rgba(0,0,0,0.2);"&gt;
+    &lt;!-- Menu Header --&gt;
+    &lt;div class="megamenu-header" style="margin-bottom: 20px; display: flex; flex-direction: column; align-items: flex-start; flex-wrap: wrap;"&gt;
+        &lt;!-- Title --&gt;
+        &lt;div class="title-container" style="margin-bottom: 15px;"&gt;
+            &lt;h2 style="color: white; margin: 0; font-size: 24px; font-weight: 500;"&gt;MENU TITLE&lt;/h2&gt;
+        &lt;/div&gt;
+        &lt;!-- Button --&gt;
+        &lt;a href="/link" class="learn-more-button" style="background-color: #D4AF37; color: #173852; padding: 10px 20px; display: inline-block; text-transform: uppercase; font-size: 14px; font-weight: bold; border-radius: 4px; text-decoration: none; transition: all 0.3s ease;"&gt;
+            LEARN MORE
+        &lt;/a&gt;
+    &lt;/div&gt;
     
-    <!-- Links List -->
-    <h3 style="color: white; font-size: 16px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px;">MENU LINKS</h3>
-    <ul style="list-style: none; padding: 0; margin: 0;">
-        <li style="margin-bottom: 10px;"><a href="/link1" style="color: white; text-decoration: none; font-size: 14px; display: block; padding: 5px 0;">First Link</a></li>
-        <li style="margin-bottom: 10px;"><a href="/link2" style="color: white; text-decoration: none; font-size: 14px; display: block; padding: 5px 0;">Second Link</a></li>
-        <li><a href="/view-all" style="color: #5bc0de; text-decoration: none; font-size: 14px; display: block; padding: 5px 0; font-weight: 600;">View All →</a></li>
-    </ul>
-</div></textarea>
-        <button class="preview-button" onclick="updatePreview()">Preview Changes</button>
-    </div>
-    <div class="editor-content" id="preview-content">
-        <div class="preview-output" id="preview-result"></div>
-    </div>
+    &lt;!-- Description --&gt;
+    &lt;div class="menu-description" style="color: white; font-size: 13px; line-height: 1.5; margin: 15px 0; max-width: 300px;"&gt;
+        This is the menu description text that appears below the title and button.
+    &lt;/div&gt;
+    
+    &lt;!-- Menu Content --&gt;
+    &lt;div class="megamenu-content" style="width: 300px; max-width: 100%;"&gt;
+        &lt;div class="menu-column" style="width: 100%;"&gt;
+            &lt;!-- Section Heading --&gt;
+            &lt;h3 style="color: white; font-size: 16px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 8px;"&gt;SECTION HEADING&lt;/h3&gt;
+            &lt;!-- Links List --&gt;
+            &lt;ul style="list-style: none; padding: 0; margin: 0;"&gt;
+                &lt;li style="margin-bottom: 10px;"&gt;&lt;a href="/link1" style="color: white; text-decoration: none; font-size: 14px; display: block; padding: 5px 0; transition: all 0.2s ease;"&gt;First Link&lt;/a&gt;&lt;/li&gt;
+                &lt;li style="margin-bottom: 10px;"&gt;&lt;a href="/link2" style="color: white; text-decoration: none; font-size: 14px; display: block; padding: 5px 0; transition: all 0.2s ease;"&gt;Second Link&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="/view-all" style="color: #5bc0de; text-decoration: none; font-size: 14px; display: block; padding: 5px 0; transition: all 0.2s ease; font-weight: 600;"&gt;View All Resources →&lt;/a&gt;&lt;/li&gt;
+            &lt;/ul&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+</div>
 </div>
 
-<h2 id="color-reference">7. Color Reference</h2>
+<h2>7. Color Reference</h2>
 
 <p>Here are some common colors you might want to use in your menus:</p>
 
 <table>
     <tr>
-        <th>Color Name</th>
-        <th>Hex Code</th>
-        <th>Sample</th>
-        <th>Usage</th>
+        <th width="30%">Color Name</th>
+        <th width="20%">Hex Code</th>
+        <th width="15%">Sample</th>
+        <th width="35%">Usage</th>
     </tr>
     <tr>
         <td>GW Dark Blue</td>
@@ -537,6 +481,39 @@
     </tr>
 </table>
 
+<div class="page-break"></div>
+
+<h2>8. Troubleshooting</h2>
+
+<p>If your menu doesn't look right after making changes, check these common issues:</p>
+
+<table>
+    <tr>
+        <th width="30%">Problem</th>
+        <th width="70%">Solution</th>
+    </tr>
+    <tr>
+        <td>Menu disappeared completely</td>
+        <td>Check for missing opening or closing tags, especially <code>&lt;div&gt;</code> tags. Make sure all tags have matching open and close pairs.</td>
+    </tr>
+    <tr>
+        <td>Text color is wrong</td>
+        <td>Check the color value in the <code>style="color: value"</code> attribute. Make sure it's a valid color (like <code>white</code> or <code>#FFFFFF</code>).</td>
+    </tr>
+    <tr>
+        <td>Button looks broken</td>
+        <td>Check that all the button style properties are still there. Don't remove any of the style properties like <code>display: inline-block;</code> or <code>border-radius: 4px;</code>.</td>
+    </tr>
+    <tr>
+        <td>Links don't work</td>
+        <td>Make sure the <code>href</code> attribute has the correct URL format. URLs should start with a forward slash (/) or http://.</td>
+    </tr>
+    <tr>
+        <td>Menu width is off</td>
+        <td>Check that you didn't remove the <code>max-width: 100%;</code> part, which keeps the menu responsive on mobile.</td>
+    </tr>
+</table>
+
 <div class="tip-box">
     <strong>Final tips:</strong>
     <ul>
@@ -544,63 +521,13 @@
         <li>Test your changes on a development site before putting them live</li>
         <li>When copying and pasting code, make sure to include all opening and closing tags</li>
         <li>If something breaks, compare your code to the original to find the issue</li>
+        <li>For colors, you can use color picker tools online to find the exact hex code you want</li>
     </ul>
 </div>
 
-<script>
-    // Function to copy code to clipboard
-    function copyToClipboard(button) {
-        const codeBlock = button.parentElement;
-        const textToCopy = codeBlock.textContent.replace('Copy', '').trim();
-        
-        navigator.clipboard.writeText(textToCopy)
-            .then(() => {
-                button.textContent = 'Copied!';
-                setTimeout(() => {
-                    button.textContent = 'Copy';
-                }, 2000);
-            })
-            .catch(err => {
-                console.error('Failed to copy text: ', err);
-            });
-    }
-    
-    // Function to switch tabs in the editor
-    function switchTab(tabName) {
-        // Hide all tabs
-        document.querySelectorAll('.editor-content').forEach(tab => {
-            tab.classList.remove('active');
-        });
-        
-        // Deactivate all tab buttons
-        document.querySelectorAll('.editor-tab').forEach(tab => {
-            tab.classList.remove('active');
-        });
-        
-        // Show the selected tab
-        document.getElementById(tabName + '-content').classList.add('active');
-        
-        // Activate the selected tab button
-        event.currentTarget.classList.add('active');
-        
-        // If switching to preview, update it
-        if (tabName === 'preview') {
-            updatePreview();
-        }
-    }
-    
-    // Function to update the preview
-    function updatePreview() {
-        const htmlCode = document.getElementById('html-editor').value;
-        const previewContainer = document.getElementById('preview-result');
-        previewContainer.innerHTML = htmlCode;
-    }
-    
-    // Initialize the preview on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        updatePreview();
-    });
-</script>
+<div class="footer">
+    <p>Menu Code Guide | Page <span class="page-number"></span> | Created May 2025</p>
+</div>
 
 </body>
 </html>
